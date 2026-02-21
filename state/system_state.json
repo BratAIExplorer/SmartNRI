@@ -1,0 +1,175 @@
+{
+  "project": "SmartNRI",
+  "version": "1.0.0",
+  "last_updated": "2026-02-21",
+  "last_active_agent": "Antigravity",
+  "phase": 1,
+  "phase_description": "Malaysia Focus — Static Daily Digest",
+  "overall_status": "IN_PROGRESS",
+
+  "roadmap": [
+    {
+      "phase": 1,
+      "name": "Malaysia Foundation",
+      "status": "IN_PROGRESS",
+      "target_date": "2026-03-15",
+      "milestones": [
+        {
+          "id": "P1.M1",
+          "name": "Agentic Stack Initialization",
+          "description": "Create all foundational directive files (claude.md, HANDOVER, specs)",
+          "status": "DONE",
+          "completed_date": "2026-02-21",
+          "agent": "Antigravity"
+        },
+        {
+          "id": "P1.M2",
+          "name": "Prototype UI (Branded SmartNRI)",
+          "description": "Rename and brand the HTML prototype. Oat UI + custom CSS.",
+          "status": "DONE",
+          "completed_date": "2026-02-21",
+          "agent": "Antigravity"
+        },
+        {
+          "id": "P1.M3",
+          "name": "Python Automation Layer",
+          "description": "Build scraper.py, summarizer.py, builder.py, watchdog.py",
+          "status": "PENDING",
+          "completed_date": null,
+          "agent": null
+        },
+        {
+          "id": "P1.M4",
+          "name": "VPS Docker Deployment",
+          "description": "Dockerfile, docker-compose.yml, Nginx config, isolated network",
+          "status": "PENDING",
+          "completed_date": null,
+          "agent": null
+        },
+        {
+          "id": "P1.M5",
+          "name": "GitHub Actions CI/CD",
+          "description": "daily_update.yml — cron trigger, run pipeline, deploy to Cloudflare Pages or VPS",
+          "status": "PENDING",
+          "completed_date": null,
+          "agent": null
+        },
+        {
+          "id": "P1.M6",
+          "name": "Watchdog & Alert Setup",
+          "description": "Telegram bot alert on pipeline failure. Health check endpoint.",
+          "status": "PENDING",
+          "completed_date": null,
+          "agent": null
+        },
+        {
+          "id": "P1.M7",
+          "name": "Alpha Launch",
+          "description": "Live URL shared in WhatsApp group. Auto-updating for 2+ consecutive days.",
+          "status": "PENDING",
+          "completed_date": null,
+          "agent": null
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Compliance Scorecard + Monetization",
+      "status": "PLANNED",
+      "target_date": "2026-04-30",
+      "milestones": [
+        { "id": "P2.M1", "name": "Share My Score viral mechanic", "status": "PLANNED" },
+        { "id": "P2.M2", "name": "Affiliate link integration (NRO/NRE, exchanges)", "status": "PLANNED" },
+        { "id": "P2.M3", "name": "Lead gen for CA/tax firms (Malaysia-India DTAA)", "status": "PLANNED" }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Ask the Source (Chatbot + Knowledge Base)",
+      "status": "PLANNED",
+      "target_date": "2026-06-30",
+      "milestones": [
+        { "id": "P3.M1", "name": "RAG chatbot over Tier 1 government sources", "status": "PLANNED" },
+        { "id": "P3.M2", "name": "Top 50 NRI FAQ — curated and verified", "status": "PLANNED" },
+        { "id": "P3.M3", "name": "Flag This Answer button", "status": "PLANNED" }
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Singapore Expansion",
+      "status": "BACKLOG",
+      "target_date": "2026-09-30",
+      "milestones": [
+        { "id": "P4.M1", "name": "IRAS, MOM Singapore source integration", "status": "BACKLOG" },
+        { "id": "P4.M2", "name": "SG vs MY rule comparison layer", "status": "BACKLOG" }
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "Community & Services Directory",
+      "status": "BACKLOG",
+      "target_date": "2027-Q1",
+      "milestones": [
+        { "id": "P5.M1", "name": "Verified CA/Lawyer directory (Malaysia/India)", "status": "BACKLOG" },
+        { "id": "P5.M2", "name": "Community Q&A forum (with AI fact-check)", "status": "BACKLOG" }
+      ]
+    }
+  ],
+
+  "modules": {
+    "frontend": {
+      "status": "PROTOTYPE",
+      "file": "index.html",
+      "framework": "Oat UI + custom CSS",
+      "version": "0.1.0"
+    },
+    "scraper": {
+      "status": "NOT_STARTED",
+      "file": "scraper.py",
+      "version": null
+    },
+    "summarizer": {
+      "status": "NOT_STARTED",
+      "file": "summarizer.py",
+      "llm_provider": "OPENAI or GEMINI — configure via .env",
+      "version": null
+    },
+    "builder": {
+      "status": "NOT_STARTED",
+      "file": "builder.py",
+      "version": null
+    },
+    "watchdog": {
+      "status": "NOT_STARTED",
+      "file": "watchdog.py",
+      "alert_channel": "Telegram",
+      "version": null
+    },
+    "deployment": {
+      "status": "NOT_STARTED",
+      "type": "Docker + Nginx on VPS",
+      "container_name": "smartnri_app",
+      "port": 8085,
+      "isolated_network": "smartnri_isolated"
+    },
+    "ci_cd": {
+      "status": "NOT_STARTED",
+      "type": "GitHub Actions",
+      "repo": "https://github.com/BratAIExplorer/SmartNRI",
+      "workflow_file": ".github/workflows/daily_update.yml"
+    }
+  },
+
+  "github": {
+    "repo": "https://github.com/BratAIExplorer/SmartNRI",
+    "default_branch": "main",
+    "deployment_branch": "gh-pages"
+  },
+
+  "security": {
+    "last_secret_scan": "2026-02-21",
+    "pii_stored": false,
+    "env_file_committed": false,
+    "docker_isolated": true
+  }
+}
