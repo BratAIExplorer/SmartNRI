@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  smartnri_app:
+    build: .
+    container_name: smartnri_app
+    restart: always
+    ports:
+      - "8085:80"
+    networks:
+      - smartnri_isolated
+    healthcheck:
+      test: [ "CMD", "wget", "-qO-", "http://localhost/" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  smartnri_isolated:
+    driver: bridge
+    name: smartnri_isolated
