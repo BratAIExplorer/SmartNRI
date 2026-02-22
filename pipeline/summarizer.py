@@ -81,19 +81,22 @@ def call_openai(raw_text: str, source_url: str) -> dict:
 
 def call_gemini(raw_text: str, source_url: str) -> dict:
     from google import genai
-    from google.genai import types
     client = genai.Client(api_key=GEMINI_KEY)
     user_msg = f"{SYSTEM_PROMPT}\n\nSource URL: {source_url}\n\nContent:\n{raw_text}"
     
     response = client.models.generate_content(
         model="gemini-flash-latest",
-        contents=user_msg,
-        config=types.GenerateContentConfig(
-            temperature=0.1,
-            response_mime_type="application/json"
-        )
+        contents=user_msg
     )
-    return json.loads(response.text)
+    
+    text = response.text
+    # Robust JSON extraction if model wraps it in markdown
+    if "```json" in text:
+        text = text.split("```json")[1].split("```")[0].strip()
+    elif "```" in text:
+        text = text.split("```")[1].split("```")[0].strip()
+        
+    return json.loads(text)
 
 
 def summarise(item: dict) -> dict | None:
