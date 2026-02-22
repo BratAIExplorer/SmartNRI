@@ -232,6 +232,11 @@ def run() -> list[dict]:
             if len(combined) < 50:
                 continue  # Too short, skip
 
+            # Filter out junk/footer items
+            junk_keywords = ["contact", "representative", "emergency", "about us", "policy", "feedback", "cookies"]
+            if any(k in item["title"].lower() for k in junk_keywords):
+                continue
+
             content_hash = hash_content(combined)
             cache_key = f"{source['id']}:{slugify(item['title'])}"
 
