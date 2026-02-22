@@ -144,13 +144,34 @@ def scrape_html(source: dict) -> list[dict]:
         return []
 
     soup = BeautifulSoup(resp.text, "html.parser")
-
-    # Try common patterns for gov announcement pages
     items = []
+
+    # Specific: ESD / MOHA Table
+    if "esd.imi.gov.my" in source["url"]:
+        table = soup.find("table")
+        if table:
+            for row in table.find_all("tr")[1:MAX_ITEMS+1]:  # skip header
+                cols = row.find_all("td")
+                if len(cols) >= 2:
+                    title = cols[1].get_text(strip=True)
+                    items.append({"title": title, "raw_text": title, "link": source["url"]})
+            if items: return items
+    
+    # Specific: HC KL Homepage
+    if "hcikl.gov.in" in source["url"]:
+        # Look for scrolling news or news links
+        for a in soup.find_all("a", href=True):
+            text = a.get_text(strip=True)
+            if len(text) > 30 and ("visa" in text.lower() or "consular" in text.lower() or "passport" in text.lower()):
+                items.append({"title": text, "raw_text": text, "link": a["href"]})
+        if items: return items[:MAX_ITEMS]
+
+    # Generic: Try common patterns for gov announcement pages
     candidates = (
         soup.select("article") or
         soup.select(".announcement, .news-item, .press-release, .update") or
         soup.select("li.item, li.news") or
+        soup.select("tr") or  # Generic table rows
         []
     )
 

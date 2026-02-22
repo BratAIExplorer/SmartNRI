@@ -45,15 +45,14 @@ SYSTEM_PROMPT = """You are a compliance guide for Indian expats (NRIs) living ab
 Your job is to summarise government updates into clear, actionable intelligence.
 
 Rules:
-1. Write EXACTLY 3 bullet points. Each bullet is one actionable sentence.
+1. Write 1-3 bullet points. Each bullet is one actionable sentence.
 2. Start each bullet with a strong verb: Review, Convert, File, Check, Declare, Ensure, Confirm.
-3. Do NOT add information not present in the source text.
+3. If the source text is very brief, provide just 1-2 bullets rather than skipping.
 4. Do NOT give legal or financial advice — only state what the rule/circular says.
 5. Write one clear "So What?" sentence (max 25 words) summarising the impact.
 6. Suggest a badge: GREEN (official update), ORANGE (expert/advisory), BLUE (community), RED (urgent action required).
-7. If you cannot summarise accurately from the text provided, respond with exactly: {"skip": true}
-
-Respond ONLY with valid JSON in this format:
+7. Only skip ({"skip": true}) if the text is completely unrelated to government rules, immigration, tax, or NRI life (e.g., footers, copyright notices).
+8. Respond ONLY with valid JSON.
 {
   "title": "Short punchy headline (max 12 words)",
   "so_what": "One sentence on why this matters to NRIs.",
