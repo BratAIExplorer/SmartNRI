@@ -1,0 +1,90 @@
+[
+  {
+    "id": "esd-imi",
+    "name": "Malaysia ESD / MOHA",
+    "url": "https://esd.imi.gov.my/portal/main/list_announcement.html",
+    "domain": "esd.imi.gov.my",
+    "tier": 1,
+    "badge": "green",
+    "topics": ["employment_pass", "visa", "work_permit"],
+    "scrape_method": "html",
+    "active": true
+  },
+  {
+    "id": "incometax-india",
+    "name": "Income Tax India",
+    "url": "https://www.incometaxindia.gov.in/Pages/press-releases.aspx",
+    "domain": "incometaxindia.gov.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": ["nri_tax", "itr", "tds", "dtaa", "fema"],
+    "scrape_method": "html",
+    "active": true
+  },
+  {
+    "id": "rbi-circulars",
+    "name": "RBI Master Circulars",
+    "url": "https://www.rbi.org.in/Scripts/BS_CircularIndexDisplay.aspx",
+    "domain": "rbi.org.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": ["nre_nro", "fema", "banking", "repatriation"],
+    "scrape_method": "html",
+    "active": true
+  },
+  {
+    "id": "rbi-rss",
+    "name": "RBI Press Releases RSS",
+    "url": "https://www.rbi.org.in/scripts/rss.aspx",
+    "domain": "rbi.org.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": ["banking", "forex", "fema"],
+    "scrape_method": "rss",
+    "active": true
+  },
+  {
+    "id": "passportindia",
+    "name": "Passport Seva",
+    "url": "https://www.passportindia.gov.in/AppOnlineProject/welcomeLink",
+    "domain": "passportindia.gov.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": ["passport", "oci", "pcc"],
+    "scrape_method": "html",
+    "active": true
+  },
+  {
+    "id": "mca-india",
+    "name": "Ministry of Corporate Affairs",
+    "url": "https://www.mca.gov.in/content/mca/global/en/mca/news-and-updates.html",
+    "domain": "mca.gov.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": ["company_law", "nri_business", "llp"],
+    "scrape_method": "html",
+    "active": true
+  },
+  {
+    "id": "hci-kl",
+    "name": "High Commission of India — Kuala Lumpur",
+    "url": "https://hcikl.gov.in/events.php",
+    "domain": "hcikl.gov.in",
+    "tier": 1,
+    "badge": "blue",
+    "topics": ["events", "consular", "community"],
+    "scrape_method": "html",
+    "active": true
+  },
+  {
+    "id": "sebi-circulars",
+    "name": "SEBI Circulars",
+    "url": "https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListing=yes&sid=1&ssid=6&smid=0",
+    "domain": "sebi.gov.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": ["investments", "mutual_funds", "nri_equity", "portfolio"],
+    "scrape_method": "html",
+    "active": true
+  }
+]
