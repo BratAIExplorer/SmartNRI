@@ -79,20 +79,37 @@ def call_openai(raw_text: str, source_url: str) -> dict:
     return json.loads(response.choices[0].message.content)
 
 
+# Models to try in order of preference (handling 404/429 errors)
+MODELS_TO_TRY = ["gemini-1.5-flash", "gemini-flash-latest", "gemini-1.5-pro"]
+
 def call_gemini(raw_text: str, source_url: str) -> dict:
-    from google import genai
-    from google.genai import types
-    client = genai.Client(api_key=GEMINI_KEY)
+    import google.generativeai as genai
+    genai.configure(api_key=GEMINI_KEY)
     user_msg = f"{SYSTEM_PROMPT}\n\nSource URL: {source_url}\n\nContent:\n{raw_text}"
-    response = client.models.generate_content(
-        model="gemini-flash-latest",
-        contents=user_msg,
-        config=types.GenerateContentConfig(
-            temperature=0.1,
-            response_mime_type="application/json"
-        )
-    )
-    return json.loads(response.text)
+    
+    last_error = None
+    for model_name in MODELS_TO_TRY:
+        try:
+            log.info(f"  Trying Gemini model: {model_name}")
+            model = genai.GenerativeModel(model_name)
+            # We remove response_mime_type because some legacy models don't support it
+            response = model.generate_content(
+                user_msg,
+                generation_config={"temperature": 0.1}
+            )
+            # Handle potential JSON wrapping in the response text
+            text = response.text
+            if "```json" in text:
+                text = text.split("```json")[1].split("```")[0].strip()
+            elif "```" in text:
+                text = text.split("```")[1].split("```")[0].strip()
+            return json.loads(text)
+        except Exception as e:
+            log.warning(f"  Model {model_name} failed: {e}")
+            last_error = e
+            continue
+            
+    raise last_error
 
 
 def summarise(item: dict) -> dict | None:

@@ -30,7 +30,7 @@
     ],
     "scrape_method": "html",
     "active": true,
-    "note": "Intermittent 503 — retries automatically next run"
+    "note": "Intermittent 503 — keep retrying"
   },
   {
     "id": "rbi-press",
@@ -47,7 +47,7 @@
     ],
     "scrape_method": "html",
     "active": true,
-    "note": "JavaScript-rendered — scraper gets index page only, links need following"
+    "note": "JavaScript-rendered — scraping index"
   },
   {
     "id": "rbi-rss",
@@ -63,12 +63,12 @@
     ],
     "scrape_method": "rss",
     "active": true,
-    "note": "RSS feed — preferred over HTML scraping for RBI"
+    "note": "RSS feed"
   },
   {
     "id": "hci-kl",
     "name": "High Commission of India — Kuala Lumpur",
-    "url": "https://hcikl.gov.in/home/newsinindia",
+    "url": "https://hcikl.gov.in/",
     "domain": "hcikl.gov.in",
     "tier": 1,
     "badge": "blue",
@@ -80,7 +80,7 @@
     ],
     "scrape_method": "html",
     "active": true,
-    "note": "Updated URL — newsinindia is more stable than pressrelease"
+    "note": "Using root domain — subpages often change or 500"
   },
   {
     "id": "sebi-circulars",
@@ -96,12 +96,12 @@
     ],
     "scrape_method": "html",
     "active": true,
-    "note": "Intermittent — retry on 503"
+    "note": "Active"
   },
   {
     "id": "passportindia",
     "name": "Passport Seva",
-    "url": "https://www.passportindia.gov.in/AppOnlineProject/welcomeLink",
+    "url": "https://www.passportindia.gov.in/",
     "domain": "passportindia.gov.in",
     "tier": 1,
     "badge": "green",
@@ -112,21 +112,6 @@
     ],
     "scrape_method": "html",
     "active": true,
-    "note": "Re-enabled — SSL legacy renegotiation now handled in scraper.py"
-  },
-  {
-    "id": "mca-india",
-    "name": "Ministry of Corporate Affairs",
-    "url": "https://www.mca.gov.in/content/mca/global/en/mca/news-and-updates.html",
-    "domain": "mca.gov.in",
-    "tier": 1,
-    "badge": "green",
-    "topics": [
-      "company_law",
-      "nri_business"
-    ],
-    "scrape_method": "html",
-    "active": false,
-    "note": "Disabled — returns 403 Forbidden for VPS/bot IPs"
+    "note": "Using root URL — deep links tend to 404"
   }
 ]
