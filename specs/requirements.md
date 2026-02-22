@@ -1,6 +1,6 @@
 # SmartNRI — Product Requirements
 
-**Version:** 1.0 | **Phase:** 1 (Malaysia) | **Date:** 21 Feb 2026
+**Version:** 1.1 | **Phase:** 1 (Global NRI) | **Date:** 23 Feb 2026
 
 ---
 
@@ -18,16 +18,16 @@ SmartNRI is a fully autonomous, hands-free, government-verified reference platfo
 
 ## Phase 1 Target Audience
 
-- Primary: Indian expats in Malaysia (KL, PJ, Penang)
+- Primary: Indian expats worldwide — Malaysia, Singapore, UAE, UK, US, Australia
 - Entry channel: WhatsApp sharing among trusted networks
 - Day 1 Users: Founder's family, friends, and colleagues
+- **Geo-capture:** Country of residence collected at registration to segment future content
 
 ---
 
 ## Non-Goals (Phase 1)
 
-- No Singapore content
-- No user accounts or login
+- No country-specific hero imagery (hero must work for any country)
 - No live chatbot (placeholder UI only)
 - No community forum
 - No native mobile app
@@ -81,9 +81,28 @@ SmartNRI is a fully autonomous, hands-free, government-verified reference platfo
 
 ---
 
+## Registration Gate (Added v1.1)
+
+- **Trigger:** Appears on first page load; also triggered when clicking Checklist or Ask tabs
+- **Fields collected (all required):**
+  - First Name
+  - Email Address
+  - Country of Residence (dropdown: Malaysia, Singapore, UAE, US, UK, AU, CA, DE, NZ, HK, JP, Other)
+  - Role: Salaried Employee / Business Owner / Freelancer / Student / Retired / Other
+- **Storage:** `localStorage` key `snri_user` (JSON) — no server-side call yet
+- **Gate behaviour:**
+  - Signal tab (first tab) is freely visible — acts as content teaser
+  - Checklist and Ask tabs blocked until registered
+  - Registration persists across sessions (localStorage)
+- **Backend hook:** `fetch('/api/register', ...)` comment in script — ready to wire
+- **Purpose:** Build email list, understand country distribution, segment by role
+
+---
+
 ## Privacy Requirements
 
-- No PII collected or stored server-side
+- Registration data stored in `localStorage` only until backend endpoint is wired
+- No PII collected beyond name, email, country, role
 - No cookies beyond session (no tracking)
 - No analytics that identify individuals
 - Checklist state lives in `localStorage` only — clears on browser reset
