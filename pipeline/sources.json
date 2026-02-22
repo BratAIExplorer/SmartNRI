@@ -68,7 +68,7 @@
   {
     "id": "hci-kl",
     "name": "High Commission of India — Kuala Lumpur",
-    "url": "https://hcikl.gov.in/home/pressrelease",
+    "url": "https://hcikl.gov.in/home/newsinindia",
     "domain": "hcikl.gov.in",
     "tier": 1,
     "badge": "blue",
@@ -80,7 +80,7 @@
     ],
     "scrape_method": "html",
     "active": true,
-    "note": "Fixed URL — events.php was 404, correct path is /home/pressrelease"
+    "note": "Updated URL — newsinindia is more stable than pressrelease"
   },
   {
     "id": "sebi-circulars",
@@ -111,8 +111,8 @@
       "pcc"
     ],
     "scrape_method": "html",
-    "active": false,
-    "note": "Disabled — SSL legacy renegotiation error from VPS. Needs --legacy-server-connect flag or alternative URL"
+    "active": true,
+    "note": "Re-enabled — SSL legacy renegotiation now handled in scraper.py"
   },
   {
     "id": "mca-india",

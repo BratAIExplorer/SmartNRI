@@ -81,9 +81,44 @@ def hash_content(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8", errors="replace")).hexdigest()
 
 
+# ── Session & Retry ───────────────────────────────────────────────────
+
+class LegacySSLAdapter(requests.adapters.HTTPAdapter):
+    """Custom adapter to handle 'Unsafe Legacy Renegotiation Disabled' errors."""
+    def init_poolmanager(self, *args, **kwargs):
+        import ssl
+        ctx = ssl.create_default_context()
+        ctx.set_ciphers('DEFAULT@SECLEVEL=1')
+        ctx.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
+        kwargs['ssl_context'] = ctx
+        return super().init_poolmanager(*args, **kwargs)
+
+def get_session():
+    from urllib3.util.retry import Retry
+    from requests.adapters import HTTPAdapter
+    
+    session = requests.Session()
+    retry_strategy = Retry(
+        total=3,
+        backoff_factor=1,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["HEAD", "GET", "OPTIONS"]
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    
+    # Mount legacy adapter for specific domains that fail SSL
+    legacy_adapter = LegacySSLAdapter(max_retries=retry_strategy)
+    session.mount("https://www.passportindia.gov.in", legacy_adapter)
+    
+    return session
+
+_session = get_session()
+
 def safe_get(url: str) -> requests.Response | None:
     try:
-        r = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+        r = _session.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         r.raise_for_status()
         return r
     except requests.RequestException as e:
