@@ -80,13 +80,17 @@ def call_openai(raw_text: str, source_url: str) -> dict:
 
 
 def call_gemini(raw_text: str, source_url: str) -> dict:
-    import google.generativeai as genai
-    genai.configure(api_key=GEMINI_KEY)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    from google import genai
+    from google.genai import types
+    client = genai.Client(api_key=GEMINI_KEY)
     user_msg = f"{SYSTEM_PROMPT}\n\nSource URL: {source_url}\n\nContent:\n{raw_text}"
-    response = model.generate_content(
-        user_msg,
-        generation_config={"temperature": 0.1, "response_mime_type": "application/json"}
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=user_msg,
+        config=types.GenerateContentConfig(
+            temperature=0.1,
+            response_mime_type="application/json"
+        )
     )
     return json.loads(response.text)
 
