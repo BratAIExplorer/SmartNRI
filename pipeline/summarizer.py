@@ -85,7 +85,7 @@ def call_gemini(raw_text: str, source_url: str) -> dict:
     client = genai.Client(api_key=GEMINI_KEY)
     user_msg = f"{SYSTEM_PROMPT}\n\nSource URL: {source_url}\n\nContent:\n{raw_text}"
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-1.5-flash",
         contents=user_msg,
         config=types.GenerateContentConfig(
             temperature=0.1,

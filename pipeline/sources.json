@@ -6,9 +6,14 @@
     "domain": "esd.imi.gov.my",
     "tier": 1,
     "badge": "green",
-    "topics": ["employment_pass", "visa", "work_permit"],
+    "topics": [
+      "employment_pass",
+      "visa",
+      "work_permit"
+    ],
     "scrape_method": "html",
-    "active": true
+    "active": true,
+    "note": "Working ✅"
   },
   {
     "id": "incometax-india",
@@ -17,64 +22,65 @@
     "domain": "incometaxindia.gov.in",
     "tier": 1,
     "badge": "green",
-    "topics": ["nri_tax", "itr", "tds", "dtaa", "fema"],
+    "topics": [
+      "nri_tax",
+      "itr",
+      "tds",
+      "dtaa"
+    ],
     "scrape_method": "html",
-    "active": true
+    "active": true,
+    "note": "Intermittent 503 — retries automatically next run"
   },
   {
-    "id": "rbi-circulars",
-    "name": "RBI Master Circulars",
-    "url": "https://www.rbi.org.in/Scripts/BS_CircularIndexDisplay.aspx",
+    "id": "rbi-press",
+    "name": "RBI Press Releases",
+    "url": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx",
     "domain": "rbi.org.in",
     "tier": 1,
     "badge": "green",
-    "topics": ["nre_nro", "fema", "banking", "repatriation"],
+    "topics": [
+      "banking",
+      "forex",
+      "fema",
+      "nre_nro"
+    ],
     "scrape_method": "html",
-    "active": true
+    "active": true,
+    "note": "JavaScript-rendered — scraper gets index page only, links need following"
   },
   {
     "id": "rbi-rss",
     "name": "RBI Press Releases RSS",
-    "url": "https://www.rbi.org.in/scripts/rss.aspx",
+    "url": "https://rbi.org.in/Scripts/rss.aspx",
     "domain": "rbi.org.in",
     "tier": 1,
     "badge": "green",
-    "topics": ["banking", "forex", "fema"],
+    "topics": [
+      "banking",
+      "forex",
+      "fema"
+    ],
     "scrape_method": "rss",
-    "active": true
-  },
-  {
-    "id": "passportindia",
-    "name": "Passport Seva",
-    "url": "https://www.passportindia.gov.in/AppOnlineProject/welcomeLink",
-    "domain": "passportindia.gov.in",
-    "tier": 1,
-    "badge": "green",
-    "topics": ["passport", "oci", "pcc"],
-    "scrape_method": "html",
-    "active": true
-  },
-  {
-    "id": "mca-india",
-    "name": "Ministry of Corporate Affairs",
-    "url": "https://www.mca.gov.in/content/mca/global/en/mca/news-and-updates.html",
-    "domain": "mca.gov.in",
-    "tier": 1,
-    "badge": "green",
-    "topics": ["company_law", "nri_business", "llp"],
-    "scrape_method": "html",
-    "active": true
+    "active": true,
+    "note": "RSS feed — preferred over HTML scraping for RBI"
   },
   {
     "id": "hci-kl",
     "name": "High Commission of India — Kuala Lumpur",
-    "url": "https://hcikl.gov.in/events.php",
+    "url": "https://hcikl.gov.in/home/pressrelease",
     "domain": "hcikl.gov.in",
     "tier": 1,
     "badge": "blue",
-    "topics": ["events", "consular", "community"],
+    "topics": [
+      "events",
+      "consular",
+      "community",
+      "malaysia"
+    ],
     "scrape_method": "html",
-    "active": true
+    "active": true,
+    "note": "Fixed URL — events.php was 404, correct path is /home/pressrelease"
   },
   {
     "id": "sebi-circulars",
@@ -83,8 +89,44 @@
     "domain": "sebi.gov.in",
     "tier": 1,
     "badge": "green",
-    "topics": ["investments", "mutual_funds", "nri_equity", "portfolio"],
+    "topics": [
+      "investments",
+      "mutual_funds",
+      "nri_equity"
+    ],
     "scrape_method": "html",
-    "active": true
+    "active": true,
+    "note": "Intermittent — retry on 503"
+  },
+  {
+    "id": "passportindia",
+    "name": "Passport Seva",
+    "url": "https://www.passportindia.gov.in/AppOnlineProject/welcomeLink",
+    "domain": "passportindia.gov.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": [
+      "passport",
+      "oci",
+      "pcc"
+    ],
+    "scrape_method": "html",
+    "active": false,
+    "note": "Disabled — SSL legacy renegotiation error from VPS. Needs --legacy-server-connect flag or alternative URL"
+  },
+  {
+    "id": "mca-india",
+    "name": "Ministry of Corporate Affairs",
+    "url": "https://www.mca.gov.in/content/mca/global/en/mca/news-and-updates.html",
+    "domain": "mca.gov.in",
+    "tier": 1,
+    "badge": "green",
+    "topics": [
+      "company_law",
+      "nri_business"
+    ],
+    "scrape_method": "html",
+    "active": false,
+    "note": "Disabled — returns 403 Forbidden for VPS/bot IPs"
   }
 ]
