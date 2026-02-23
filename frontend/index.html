@@ -2170,16 +2170,32 @@
     document.querySelectorAll('.nav-tab, .mobile-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
+
         // Gate: checklist and ask tabs require registration
         if ((target === 'checklist' || target === 'ask') && !localStorage.getItem('snri_user')) {
           showGate();
           return;
         }
+
         document.querySelectorAll('.nav-tab, .mobile-tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll(`[data-tab="${target}"]`).forEach(t => t.classList.add('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.getElementById('tab-' + target).classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        const targetContent = document.getElementById('tab-' + target);
+        targetContent.classList.add('active');
+
+        // IMPROVED UX: Scroll to the content area so the user sees the change
+        const contentHeader = document.querySelector('.stats-bar') || targetContent;
+        const offset = 80; // nav height
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = contentHeader.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       });
     });
 
