@@ -1658,6 +1658,42 @@
       user-select: none;
     }
 
+    /* auth tabs */
+    .auth-tabs {
+      display: flex;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .auth-tab {
+      background: none;
+      border: none;
+      font-size: 15px;
+      font-family: var(--font);
+      font-weight: 600;
+      color: var(--text-tertiary);
+      padding: 0 0 10px 0;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .auth-tab.active {
+      color: var(--text-primary);
+    }
+
+    .auth-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px 2px 0 0;
+    }
+
     /* ── BETA Banner ── */
     .beta-banner {
       background: #FFFBEB;
@@ -2241,10 +2277,16 @@
         <span class="reg-logo-text">SmartNRI</span>
       </div>
       <h2 id="gate-header">Get free access to verified NRI intelligence</h2>
-      <p>Join 1,200+ Indian expats who stay ahead of tax, banking &amp; visa rules. Free forever &mdash; no spam, no
-        sales.</p>
 
-      <div class="reg-row">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-signup" onclick="setAuthMode('signup')">Sign Up</button>
+        <button class="auth-tab" id="tab-login" onclick="setAuthMode('login')">Log In</button>
+      </div>
+
+      <p id="gate-subtitle">Join 1,200+ Indian expats who stay ahead of tax, banking &amp; visa rules. Free forever
+        &mdash; no spam, no sales.</p>
+
+      <div class="reg-row" id="row-name">
         <div class="reg-field">
           <label for="reg-name">First Name</label>
           <input type="text" id="reg-name" placeholder="Priya" autocomplete="given-name">
@@ -2255,7 +2297,9 @@
         </div>
       </div>
 
-      <div class="reg-row">
+      <!-- Login only uses email, so we need a separate row for login email or just reuse it. We'll reuse the email input and hide the name input dynamically -->
+
+      <div class="reg-row" id="row-extra">
         <div class="reg-field">
           <label for="reg-country">Country of Residence</label>
           <select id="reg-country">
@@ -2308,13 +2352,38 @@
 
   <script>
     // ── Registration gate ──
+    let isLoginMode = false;
+
+    function setAuthMode(mode) {
+      isLoginMode = mode === 'login';
+      document.getElementById('tab-signup').classList.toggle('active', !isLoginMode);
+      document.getElementById('tab-login').classList.toggle('active', isLoginMode);
+
+      const nameField = document.getElementById('reg-name').parentElement;
+      const extraRow = document.getElementById('row-extra');
+      const submitBtn = document.getElementById('regSubmit');
+      const subtitle = document.getElementById('gate-subtitle');
+
+      if (isLoginMode) {
+        nameField.style.display = 'none';
+        extraRow.style.display = 'none';
+        submitBtn.innerHTML = 'Log In &rarr;';
+        subtitle.innerHTML = 'Welcome back. Enter your email to quickly access your account.';
+      } else {
+        nameField.style.display = 'block';
+        extraRow.style.display = 'grid';
+        submitBtn.innerHTML = 'Get Free Access &rarr;';
+        subtitle.innerHTML = 'Join 1,200+ Indian expats who stay ahead of tax, banking &amp; visa rules. Free forever &mdash; no spam, no sales.';
+      }
+    }
+
     function showGate(featureName) {
       const overlay = document.getElementById('regOverlay');
       const gateContent = document.querySelector('.content-gate');
       const header = document.getElementById('gate-header');
 
       if (featureName) {
-        header.innerHTML = `Create a free account to unlock ${featureName}`;
+        header.innerHTML = `Sign up or log in to unlock ${featureName}`;
       } else {
         header.innerHTML = `Get free access to verified NRI intelligence`;
       }
@@ -2322,27 +2391,34 @@
       overlay.classList.remove('hidden');
       if (gateContent) gateContent.classList.add('blurred');
     }
+
     function hideGate() {
       const overlay = document.getElementById('regOverlay');
       const gateContent = document.querySelector('.content-gate');
       overlay.classList.add('hidden');
       if (gateContent) gateContent.classList.remove('blurred');
     }
+
     function handleRegistration() {
-      const name = document.getElementById('reg-name').value.trim();
       const email = document.getElementById('reg-email').value.trim();
-      const country = document.getElementById('reg-country').value;
-      const role = document.getElementById('reg-role').value;
-      if (!name) { document.getElementById('reg-name').focus(); return; }
       if (!email || !email.includes('@')) { document.getElementById('reg-email').focus(); return; }
-      if (!country) { document.getElementById('reg-country').focus(); return; }
-      if (!role) { document.getElementById('reg-role').focus(); return; }
+
+      let userData = { email, ts: new Date().toISOString() };
+
+      if (!isLoginMode) {
+        const name = document.getElementById('reg-name').value.trim();
+        const country = document.getElementById('reg-country').value;
+        const role = document.getElementById('reg-role').value;
+        if (!name) { document.getElementById('reg-name').focus(); return; }
+        if (!country) { document.getElementById('reg-country').focus(); return; }
+        if (!role) { document.getElementById('reg-role').focus(); return; }
+        userData.name = name;
+        userData.country = country;
+        userData.role = role;
+      }
 
       // Store user data
-      localStorage.setItem('snri_user', JSON.stringify({
-        name, email, country, role,
-        ts: new Date().toISOString()
-      }));
+      localStorage.setItem('snri_user', JSON.stringify(userData));
 
       // Remove lock icons
       document.querySelectorAll('[data-tab="checklist"]').forEach(el => el.innerHTML = el.innerHTML.replace(' 🔒', ''));
@@ -2355,6 +2431,12 @@
         document.querySelector(`[data-tab="${window.pendingTab}"]`).click();
         window.pendingTab = null;
       }
+
+      // If there's a pending external link click
+      if (window.pendingLink) {
+        window.open(window.pendingLink, '_blank');
+        window.pendingLink = null;
+      }
     }
 
     // Check on load — add soft lock icons if not registered
@@ -2364,6 +2446,16 @@
         document.querySelectorAll('[data-tab="checklist"]').forEach(el => el.innerHTML += ' &#128274;'); // Lock icon
         document.querySelectorAll('[data-tab="ask"]').forEach(el => el.innerHTML += ' &#128274;');
       }
+
+      // Link Interception Logic for unauthenticated users
+      document.body.addEventListener('click', function (e) {
+        const link = e.target.closest('.card-cta') || e.target.closest('.card-source a');
+        if (link && !localStorage.getItem('snri_user')) {
+          e.preventDefault();
+          window.pendingLink = link.href;
+          showGate('External Source Links');
+        }
+      });
     });
 
     // ── Tab switching ──
