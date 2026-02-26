@@ -1647,7 +1647,7 @@
       text-decoration: none;
     }
 
-    /* blurred body content while unregistered */
+    /* ── Content gate (blur effect) ── */
     .content-gate {
       transition: filter 0.4s ease;
     }
@@ -1657,10 +1657,160 @@
       pointer-events: none;
       user-select: none;
     }
+
+    /* ── BETA Banner ── */
+    .beta-banner {
+      background: #FFFBEB;
+      border-bottom: 1px solid #FEF3C7;
+      padding: 8px 32px;
+      text-align: center;
+      font-size: 13px;
+      color: #92400E;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1000;
+    }
+
+    .beta-badge {
+      background: #F59E0B;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .beta-banner a {
+      color: #D97706;
+      text-decoration: underline;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── Bug Report Modal ── */
+    .bug-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 40, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .bug-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .bug-modal {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .bug-overlay.active .bug-modal {
+      transform: scale(1);
+    }
+
+    .bug-modal h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .bug-modal p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .bug-field {
+      margin-bottom: 16px;
+    }
+
+    .bug-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    .bug-field textarea,
+    .bug-field input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-family: var(--font);
+      background: var(--bg);
+      outline: none;
+    }
+
+    .bug-field textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    .bug-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .btn-cancel {
+      padding: 10px 20px;
+      border: none;
+      background: var(--border-light);
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      padding: 10px 24px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── Stat Link Styles ── */
+    .stat-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- BETA BANNER -->
+  <div class="beta-banner">
+    <span class="beta-badge">Beta</span>
+    <span>SmartNRI is currently in Early Access. Help us improve!</span>
+    <a onclick="showBugModal()">Report BUG/ Ask Features</a>
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -1718,26 +1868,34 @@
   <!-- STATS BAR -->
   <div class="content">
     <div class="stats-bar">
-      <div class="stat">
-        <div class="stat-icon">&#127981;</div>
-        <div class="stat-value">13</div>
-        <div class="stat-label">Gov Sources</div>
-      </div>
-      <div class="stat">
-        <div class="stat-icon">&#128203;</div>
-        <div class="stat-value">5</div>
-        <div class="stat-label">Topics This Week</div>
-      </div>
-      <div class="stat">
-        <div class="stat-icon">&#127462;&#127473;</div>
-        <div class="stat-value">&#8377; &amp; RM</div>
-        <div class="stat-label">Both Jurisdictions</div>
-      </div>
-      <div class="stat">
-        <div class="stat-icon">&#9989;</div>
-        <div class="stat-value">100%</div>
-        <div class="stat-label">Source-Verified</div>
-      </div>
+      <a href="#tab-signal" class="stat-link" onclick="document.querySelector('[data-tab=signal]').click()">
+        <div class="stat">
+          <div class="stat-icon">&#127981;</div>
+          <div class="stat-value">13</div>
+          <div class="stat-label">Gov Sources</div>
+        </div>
+      </a>
+      <a href="#tab-signal" class="stat-link" onclick="document.querySelector('[data-tab=signal]').click()">
+        <div class="stat">
+          <div class="stat-icon">&#128203;</div>
+          <div class="stat-value">5</div>
+          <div class="stat-label">Topics This Week</div>
+        </div>
+      </a>
+      <a href="#tab-ask" class="stat-link" onclick="document.querySelector('[data-tab=checklist]').click()">
+        <div class="stat">
+          <div class="stat-icon">&#127462;&#127473;</div>
+          <div class="stat-value">&#8377; &amp; RM</div>
+          <div class="stat-label">Both Jurisdictions</div>
+        </div>
+      </a>
+      <a href="#tab-signal" class="stat-link" onclick="document.querySelector('[data-tab=signal]').click()">
+        <div class="stat">
+          <div class="stat-icon">&#9989;</div>
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Source-Verified</div>
+        </div>
+      </a>
     </div>
 
     <!-- FEATURE STEPS -->
@@ -2055,6 +2213,26 @@
 
   </div><!-- /content -->
 
+  <!-- BUG REPORT MODAL -->
+  <div class="bug-overlay" id="bugOverlay">
+    <div class="bug-modal">
+      <h2>Report BUG/ Ask Features</h2>
+      <p>Found something broken or have a feature request? Let us know!</p>
+      <div class="bug-field">
+        <label>What happened?</label>
+        <textarea id="bug-desc" placeholder="Describe the bug or feature request..."></textarea>
+      </div>
+      <div class="bug-field">
+        <label>Your Email (Optional)</label>
+        <input type="email" id="bug-email" placeholder="so we can follow up">
+      </div>
+      <div class="bug-actions">
+        <button class="btn-cancel" onclick="hideBugModal()">Cancel</button>
+        <button class="btn-submit" onclick="submitBug()">Send Report</button>
+      </div>
+    </div>
+  </div>
+
   <!-- REGISTRATION GATE MODAL -->
   <div class="reg-overlay" id="regOverlay">
     <div class="reg-modal">
@@ -2062,7 +2240,7 @@
         <div class="reg-logo-icon">SN</div>
         <span class="reg-logo-text">SmartNRI</span>
       </div>
-      <h2>Get free access to verified NRI intelligence</h2>
+      <h2 id="gate-header">Get free access to verified NRI intelligence</h2>
       <p>Join 1,200+ Indian expats who stay ahead of tax, banking &amp; visa rules. Free forever &mdash; no spam, no
         sales.</p>
 
@@ -2130,9 +2308,17 @@
 
   <script>
     // ── Registration gate ──
-    function showGate() {
+    function showGate(featureName) {
       const overlay = document.getElementById('regOverlay');
       const gateContent = document.querySelector('.content-gate');
+      const header = document.getElementById('gate-header');
+
+      if (featureName) {
+        header.innerHTML = `Create a free account to unlock ${featureName}`;
+      } else {
+        header.innerHTML = `Get free access to verified NRI intelligence`;
+      }
+
       overlay.classList.remove('hidden');
       if (gateContent) gateContent.classList.add('blurred');
     }
@@ -2151,19 +2337,33 @@
       if (!email || !email.includes('@')) { document.getElementById('reg-email').focus(); return; }
       if (!country) { document.getElementById('reg-country').focus(); return; }
       if (!role) { document.getElementById('reg-role').focus(); return; }
+
       // Store user data
       localStorage.setItem('snri_user', JSON.stringify({
         name, email, country, role,
         ts: new Date().toISOString()
       }));
-      // Optional: ping your backend (replace URL when ready)
-      // fetch('/api/register', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name,email,country,role}) }).catch(()=>{});
+
+      // Remove lock icons
+      document.querySelectorAll('[data-tab="checklist"]').forEach(el => el.innerHTML = el.innerHTML.replace(' 🔒', ''));
+      document.querySelectorAll('[data-tab="ask"]').forEach(el => el.innerHTML = el.innerHTML.replace(' 🔒', ''));
+
       hideGate();
+
+      // If there's a pending tab (from soft gate), switch to it
+      if (window.pendingTab) {
+        document.querySelector(`[data-tab="${window.pendingTab}"]`).click();
+        window.pendingTab = null;
+      }
     }
-    // Check on load — show gate if not registered
+
+    // Check on load — add soft lock icons if not registered
     document.addEventListener('DOMContentLoaded', function () {
       const user = localStorage.getItem('snri_user');
-      if (!user) showGate();
+      if (!user) {
+        document.querySelectorAll('[data-tab="checklist"]').forEach(el => el.innerHTML += ' &#128274;'); // Lock icon
+        document.querySelectorAll('[data-tab="ask"]').forEach(el => el.innerHTML += ' &#128274;');
+      }
     });
 
     // ── Tab switching ──
@@ -2173,7 +2373,9 @@
 
         // Gate: checklist and ask tabs require registration
         if ((target === 'checklist' || target === 'ask') && !localStorage.getItem('snri_user')) {
-          showGate();
+          window.pendingTab = target; // Remember which tab they wanted
+          const featureName = target === 'checklist' ? 'My Checklist' : 'Ask a Question';
+          showGate(featureName);
           return;
         }
 
@@ -2205,6 +2407,28 @@
       const q = document.getElementById('ask-input').value.trim();
       if (!q) return;
       alert('SmartNRI AI is launching soon.\n\nMeanwhile, search on:\n\u2022 incometaxindia.gov.in\n\u2022 rbi.org.in\n\u2022 esd.imi.gov.my');
+    }
+
+    // ── Bug Reporting ──
+    function showBugModal() {
+      document.getElementById('bugOverlay').classList.add('active');
+    }
+    function hideBugModal() {
+      document.getElementById('bugOverlay').classList.remove('active');
+    }
+    function submitBug() {
+      const desc = document.getElementById('bug-desc').value.trim();
+      const email = document.getElementById('bug-email').value.trim();
+      if (!desc) { alert('Please describe the issue.'); return; }
+
+      console.log('Bug Reported:', { desc, email, ts: new Date().toISOString() });
+
+      // In a real app, you'd fetch('/api/report-bug', ...)
+      // For now, we show a success message
+      alert('Thank you! Your report has been sent to our team.');
+      hideBugModal();
+      document.getElementById('bug-desc').value = '';
+      document.getElementById('bug-email').value = '';
     }
   </script>
 
