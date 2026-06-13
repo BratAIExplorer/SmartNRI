@@ -1,23 +1,42 @@
 {
   "project": "SmartNRI",
-  "version": "1.0.0",
-  "last_updated": "2026-02-21",
-  "last_active_agent": "Antigravity",
-  "phase": 1,
-  "phase_description": "Malaysia Focus — Static Daily Digest",
+  "version": "2.1.0",
+  "last_updated": "2026-02-23",
+  "last_active_agent": "Claude Opus 4.6 (Anthropic)",
+  "phase": "1.5",
+  "phase_description": "Multi-Country Foundation — USA, Canada, Singapore + Malaysia",
   "overall_status": "IN_PROGRESS",
+  "strategy": "Global NRI Intelligence Platform — Top 7 countries, then Top 20",
+
+  "identity": {
+    "vision": "Every Indian abroad deserves one place to find the truth — verified, current, and free.",
+    "mission": "SmartNRI maps the regulatory landscape for Non-Resident Indians across 7+ countries, connecting 18 million NRIs to government-verified intelligence on tax, immigration, banking, and compliance — autonomously, without selling financial products, and without requiring a single human editor.",
+    "tagline": "The truth before the transaction.",
+    "positioning": "The Map — navigator, not source of truth. We curate, we don't advise.",
+    "business_model": "B2C-first, B2B-as-a-byproduct (audience-first playbook)",
+    "ambition": "Lifestyle business operations, positioned as acquisition target by Year 2-3",
+    "core_values": ["Source-First", "Product-Agnostic", "Privacy-Default", "Hands-Free"]
+  },
+
+  "audits_incorporated": {
+    "gpt_audit": "SmartNRI Global Expansion – Audit & Reco_GPT.md",
+    "gemini_audit": "Strategic Framework for an Autonomous_Gemini.md",
+    "review_date": "2026-02-23",
+    "accepted": ["HITL for RED alerts", "Gulf vs Western segmentation", "Pilot one guide first", "Test one affiliate link", "Trust as architecture", "Adversarial testing", "Trust Management Platform (Phase 4+)", "Government API preferences", "Insurance awareness (Phase 3+)", "Performance-based fees (Phase 4+)"],
+    "rejected": ["LangGraph/Pinecone/Vercel stack", "30-day build timeline", "RAG with vector DB", "Cybernetic Amplifier B2B", "Apollo/Smartlead B2B tools", "Hire 7-14 domain experts", "Compliance Officer role", "Editorial team"],
+    "gaps_identified": ["WhatsApp-first distribution", "SEO as moat", "Content quality over velocity", "Cold start plan", "Offline/PDF utility", "Indian language support (Phase 3+)"]
+  },
 
   "roadmap": [
     {
       "phase": 1,
       "name": "Malaysia Foundation",
-      "status": "IN_PROGRESS",
-      "target_date": "2026-03-15",
+      "status": "DONE",
+      "target_date": "2026-02-23",
       "milestones": [
         {
           "id": "P1.M1",
           "name": "Agentic Stack Initialization",
-          "description": "Create all foundational directive files (claude.md, HANDOVER, specs)",
           "status": "DONE",
           "completed_date": "2026-02-21",
           "agent": "Antigravity"
@@ -25,93 +44,117 @@
         {
           "id": "P1.M2",
           "name": "Prototype UI (Branded SmartNRI)",
-          "description": "Rename and brand the HTML prototype. Oat UI + custom CSS.",
           "status": "DONE",
-          "completed_date": "2026-02-21",
+          "completed_date": "2026-02-23",
           "agent": "Antigravity"
         },
         {
           "id": "P1.M3",
           "name": "Python Automation Layer",
-          "description": "Build scraper.py, summarizer.py, builder.py, watchdog.py",
-          "status": "PENDING",
-          "completed_date": null,
-          "agent": null
+          "status": "DONE",
+          "completed_date": "2026-02-23",
+          "agent": "Claude Code",
+          "notes": "scraper.py, summarizer.py, publisher.py, watchdog.py, main.py all functional"
         },
         {
           "id": "P1.M4",
-          "name": "VPS Docker Deployment",
-          "description": "Dockerfile, docker-compose.yml, Nginx config, isolated network",
-          "status": "PENDING",
-          "completed_date": null,
-          "agent": null
+          "name": "Docker & Nginx Config",
+          "status": "DONE",
+          "completed_date": "2026-02-22",
+          "agent": "Antigravity",
+          "notes": "docker-compose.yml, Dockerfile, nginx.conf created"
         },
         {
           "id": "P1.M5",
-          "name": "GitHub Actions CI/CD",
-          "description": "daily_update.yml — cron trigger, run pipeline, deploy to Cloudflare Pages or VPS",
+          "name": "Registration Gate",
+          "status": "DONE",
+          "completed_date": "2026-02-23",
+          "agent": "Antigravity",
+          "notes": "localStorage-based. Backend not yet wired."
+        }
+      ]
+    },
+    {
+      "phase": 1.5,
+      "name": "Multi-Country Foundation",
+      "status": "IN_PROGRESS",
+      "target_date": "2026-03-15",
+      "milestones": [
+        {
+          "id": "P1.5.M1",
+          "name": "Country Profile System",
+          "description": "JSON schema, profile loader, countries/ directory",
           "status": "PENDING",
-          "completed_date": null,
+          "epic": "1.5.1",
           "agent": null
         },
         {
-          "id": "P1.M6",
-          "name": "Watchdog & Alert Setup",
-          "description": "Telegram bot alert on pipeline failure. Health check endpoint.",
+          "id": "P1.5.M2",
+          "name": "Pipeline Multi-Country Refactor",
+          "description": "Scraper, summarizer, publisher all iterate over country profiles",
           "status": "PENDING",
-          "completed_date": null,
+          "epic": "1.5.2",
           "agent": null
         },
         {
-          "id": "P1.M7",
-          "name": "Alpha Launch",
-          "description": "Live URL shared in WhatsApp group. Auto-updating for 2+ consecutive days.",
+          "id": "P1.5.M3",
+          "name": "Frontend Country Switcher",
+          "description": "Country dropdown, per-country HTML pages, URL routing",
           "status": "PENDING",
-          "completed_date": null,
+          "epic": "1.5.3",
+          "agent": null
+        },
+        {
+          "id": "P1.5.M4",
+          "name": "Global vs Local Content Tagging",
+          "description": "scope field in summaries, merged feeds per country",
+          "status": "PENDING",
+          "epic": "1.5.4",
+          "agent": null
+        },
+        {
+          "id": "P1.5.M5",
+          "name": "USA + Canada + Singapore Sources Live",
+          "description": "Country profiles created, scraper fetching, pipeline running for 4 countries",
+          "status": "PENDING",
           "agent": null
         }
       ]
     },
     {
       "phase": 2,
-      "name": "Compliance Scorecard + Monetization",
+      "name": "Gulf Expansion + Monetization v1",
       "status": "PLANNED",
       "target_date": "2026-04-30",
       "milestones": [
-        { "id": "P2.M1", "name": "Share My Score viral mechanic", "status": "PLANNED" },
-        { "id": "P2.M2", "name": "Affiliate link integration (NRO/NRE, exchanges)", "status": "PLANNED" },
-        { "id": "P2.M3", "name": "Lead gen for CA/tax firms (Malaysia-India DTAA)", "status": "PLANNED" }
+        { "id": "P2.M1", "name": "UAE + Saudi Arabia Country Profiles", "status": "PLANNED", "epic": "2.1" },
+        { "id": "P2.M2", "name": "Guides Tab (Transition Checklists)", "status": "PLANNED", "epic": "2.2" },
+        { "id": "P2.M3", "name": "Compare Tab (Regulatory Comparison)", "status": "PLANNED", "epic": "2.3" },
+        { "id": "P2.M4", "name": "Affiliate Integration + Starter Kits", "status": "PLANNED", "epic": "2.4" }
       ]
     },
     {
       "phase": 3,
-      "name": "Ask the Source (Chatbot + Knowledge Base)",
+      "name": "Intelligence Engine + Pro Tier",
       "status": "PLANNED",
       "target_date": "2026-06-30",
       "milestones": [
-        { "id": "P3.M1", "name": "RAG chatbot over Tier 1 government sources", "status": "PLANNED" },
-        { "id": "P3.M2", "name": "Top 50 NRI FAQ — curated and verified", "status": "PLANNED" },
-        { "id": "P3.M3", "name": "Flag This Answer button", "status": "PLANNED" }
+        { "id": "P3.M1", "name": "Search Discoverer Engine", "status": "PLANNED", "epic": "3.1" },
+        { "id": "P3.M2", "name": "Trend Sensor Engine", "status": "PLANNED", "epic": "3.2" },
+        { "id": "P3.M3", "name": "SmartNRI Pro Subscription (WhatsApp + Email)", "status": "PLANNED", "epic": "3.3" },
+        { "id": "P3.M4", "name": "Ask Tab — Functional Q&A", "status": "PLANNED", "epic": "3.4" }
       ]
     },
     {
       "phase": 4,
-      "name": "Singapore Expansion",
+      "name": "Scale + B2B + Top 20 Expansion",
       "status": "BACKLOG",
-      "target_date": "2026-09-30",
+      "target_date": "2026-Q4",
       "milestones": [
-        { "id": "P4.M1", "name": "IRAS, MOM Singapore source integration", "status": "BACKLOG" },
-        { "id": "P4.M2", "name": "SG vs MY rule comparison layer", "status": "BACKLOG" }
-      ]
-    },
-    {
-      "phase": 5,
-      "name": "Community & Services Directory",
-      "status": "BACKLOG",
-      "target_date": "2027-Q1",
-      "milestones": [
-        { "id": "P5.M1", "name": "Verified CA/Lawyer directory (Malaysia/India)", "status": "BACKLOG" },
-        { "id": "P5.M2", "name": "Community Q&A forum (with AI fact-check)", "status": "BACKLOG" }
+        { "id": "P4.M1", "name": "Kuwait + Qatar + Oman + UK + Australia Profiles", "status": "BACKLOG", "epic": "4.1" },
+        { "id": "P4.M2", "name": "Sponsored Verified Cards (B2B)", "status": "BACKLOG", "epic": "4.2" },
+        { "id": "P4.M3", "name": "Enterprise API", "status": "BACKLOG", "epic": "4.3" },
+        { "id": "P4.M4", "name": "Distribution Channels (WhatsApp/Telegram Channels)", "status": "BACKLOG", "epic": "4.4" }
       ]
     }
   ],
@@ -119,38 +162,64 @@
   "modules": {
     "frontend": {
       "status": "PROTOTYPE",
-      "file": "index.html",
+      "file": "frontend/index.html",
       "framework": "Oat UI + custom CSS",
-      "version": "0.1.0"
+      "version": "0.2.0",
+      "tabs": ["Signal", "Checklist (→ Guides in Phase 2)", "Ask"],
+      "notes": "Registration gate live. Country switcher pending Phase 1.5."
     },
     "scraper": {
-      "status": "NOT_STARTED",
-      "file": "scraper.py",
-      "version": null
+      "status": "WORKING",
+      "file": "pipeline/scraper.py",
+      "version": "1.0.0",
+      "sources_file": "pipeline/sources.json",
+      "notes": "Working for Malaysia sources. Needs refactor for country profiles in Phase 1.5."
     },
     "summarizer": {
-      "status": "NOT_STARTED",
-      "file": "summarizer.py",
-      "llm_provider": "OPENAI or GEMINI — configure via .env",
-      "version": null
+      "status": "WORKING",
+      "file": "pipeline/summarizer.py",
+      "llm_provider": "Gemini (gemini-flash-latest) or OpenAI (gpt-4o-mini)",
+      "version": "1.0.0",
+      "notes": "Dual-provider support. Gemini as default."
     },
-    "builder": {
-      "status": "NOT_STARTED",
-      "file": "builder.py",
-      "version": null
+    "publisher": {
+      "status": "WORKING",
+      "file": "pipeline/publisher.py",
+      "version": "1.0.0",
+      "notes": "Injects cards into single index.html. Needs refactor for per-country pages in Phase 1.5."
     },
     "watchdog": {
+      "status": "WORKING",
+      "file": "pipeline/watchdog.py",
+      "alert_channel": "Telegram + Email",
+      "version": "1.0.0",
+      "notes": "Health monitoring functional. Needs multi-country awareness in Phase 1.5."
+    },
+    "discoverer": {
       "status": "NOT_STARTED",
-      "file": "watchdog.py",
-      "alert_channel": "Telegram",
-      "version": null
+      "file": "pipeline/discoverer.py",
+      "phase": 3,
+      "notes": "Search Discoverer engine — Google Custom Search + LLM classification."
+    },
+    "trend_sensor": {
+      "status": "NOT_STARTED",
+      "file": "pipeline/trend_sensor.py",
+      "phase": 3,
+      "notes": "Google Trends + Reddit API → topic detection."
+    },
+    "country_profiles": {
+      "status": "NOT_STARTED",
+      "directory": "countries/",
+      "phase": "1.5",
+      "notes": "JSON profiles per country. Schema defined in specs/requirements.md."
     },
     "deployment": {
-      "status": "NOT_STARTED",
+      "status": "CONFIGURED",
       "type": "Docker + Nginx on VPS",
       "container_name": "smartnri_app",
       "port": 8085,
-      "isolated_network": "smartnri_isolated"
+      "isolated_network": "smartnri_isolated",
+      "notes": "Config files exist. Not yet deployed to VPS."
     },
     "ci_cd": {
       "status": "NOT_STARTED",
@@ -160,6 +229,56 @@
     }
   },
 
+  "monetization": {
+    "status": "DESIGNED",
+    "phase_active": "Phase 2",
+    "streams": [
+      {
+        "name": "Contextual Affiliate Partners",
+        "status": "DESIGNED",
+        "categories": ["remittance", "tax_filing", "parent_health", "legal", "insurance", "property_mgmt"],
+        "target_revenue": "$500-2000/month"
+      },
+      {
+        "name": "Country Starter Kits",
+        "status": "DESIGNED",
+        "price_range": "$29-49",
+        "platform": "Gumroad or Lemon Squeezy",
+        "target_revenue": "$7800/month at 200 sales"
+      },
+      {
+        "name": "SmartNRI Pro Subscription",
+        "status": "DESIGNED",
+        "price": "$5/month",
+        "delivery": "WhatsApp Business API + Email (SendGrid)",
+        "target_revenue": "$5000/month at 1000 subscribers"
+      },
+      {
+        "name": "Sponsored Verified Cards (B2B)",
+        "status": "BACKLOG",
+        "price_range": "$500-2000/month per card",
+        "prerequisite": "50K+ monthly visitors"
+      }
+    ]
+  },
+
+  "countries": {
+    "supported": [
+      { "code": "MY", "name": "Malaysia", "status": "ACTIVE", "phase": 1 },
+      { "code": "US", "name": "USA", "status": "PENDING", "phase": 1.5 },
+      { "code": "CA", "name": "Canada", "status": "PENDING", "phase": 1.5 },
+      { "code": "SG", "name": "Singapore", "status": "PENDING", "phase": 1.5 },
+      { "code": "AE", "name": "UAE", "status": "PLANNED", "phase": 2 },
+      { "code": "SA", "name": "Saudi Arabia", "status": "PLANNED", "phase": 2 },
+      { "code": "KW", "name": "Kuwait", "status": "BACKLOG", "phase": 4 },
+      { "code": "QA", "name": "Qatar", "status": "BACKLOG", "phase": 4 },
+      { "code": "OM", "name": "Oman", "status": "BACKLOG", "phase": 4 },
+      { "code": "GB", "name": "UK", "status": "BACKLOG", "phase": 4 },
+      { "code": "AU", "name": "Australia", "status": "BACKLOG", "phase": 4 }
+    ],
+    "global_source": "India (serves all countries)"
+  },
+
   "github": {
     "repo": "https://github.com/BratAIExplorer/SmartNRI",
     "default_branch": "main",
@@ -167,7 +286,7 @@
   },
 
   "security": {
-    "last_secret_scan": "2026-02-21",
+    "last_secret_scan": "2026-02-23",
     "pii_stored": false,
     "env_file_committed": false,
     "docker_isolated": true

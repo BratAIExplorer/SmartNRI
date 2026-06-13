@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2203,6 +2203,7 @@
         </div>
       </div>
 
+      <!--
       <h3 style="font-size:18px;font-weight:600;margin-bottom:4px;">Trusted Voices</h3>
       <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">Community-recommended channels for NRI
         finance education. We are not affiliated with and do not reproduce their content.</p>
@@ -2245,6 +2246,7 @@
         <span>Community recommendations for education only. We do not reproduce or verify their content. Always
           cross-check with official government sources before acting.</span>
       </div>
+      -->
     </div>
 
   </div><!-- /content -->
@@ -2278,9 +2280,43 @@
       </div>
       <h2 id="gate-header">Get free access to verified NRI intelligence</h2>
 
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-signup" onclick="setAuthMode('signup')">Sign Up</button>
-        <button class="auth-tab" id="tab-login" onclick="setAuthMode('login')">Log In</button>
+      <style>
+        .auth-tabs-group {
+          display: flex;
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+
+        .auth-btn {
+          flex: 1;
+          padding: 14px 16px;
+          border-radius: 12px;
+          font-family: var(--font);
+          font-size: 16px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          border: 1.5px solid var(--border);
+          background: var(--surface);
+          color: var(--text-secondary);
+          text-align: center;
+        }
+
+        .auth-btn.active {
+          border-color: var(--accent);
+          background: var(--blue-bg);
+          color: var(--accent);
+          box-shadow: 0 4px 12px rgba(0, 113, 227, 0.12);
+        }
+
+        .auth-btn:not(.active):hover {
+          background: var(--border-light);
+          color: var(--text-primary);
+        }
+      </style>
+      <div class="auth-tabs-group">
+        <button class="auth-btn active" id="tab-signup" onclick="setAuthMode('signup')">Sign Up</button>
+        <button class="auth-btn" id="tab-login" onclick="setAuthMode('login')">Log In</button>
       </div>
 
       <p id="gate-subtitle">Join 1,200+ Indian expats who stay ahead of tax, banking &amp; visa rules. Free forever
@@ -2420,6 +2456,13 @@
       // Store user data
       localStorage.setItem('snri_user', JSON.stringify(userData));
 
+      // Send to API
+      fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+      }).catch(e => console.error("Registration API error:", e));
+
       // Remove lock icons
       document.querySelectorAll('[data-tab="checklist"]').forEach(el => el.innerHTML = el.innerHTML.replace(' 🔒', ''));
       document.querySelectorAll('[data-tab="ask"]').forEach(el => el.innerHTML = el.innerHTML.replace(' 🔒', ''));
@@ -2515,8 +2558,11 @@
 
       console.log('Bug Reported:', { desc, email, ts: new Date().toISOString() });
 
-      // In a real app, you'd fetch('/api/report-bug', ...)
-      // For now, we show a success message
+      fetch('/api/report-bug', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, description: desc })
+      }).catch(e => console.error("Bug report API error:", e));
       alert('Thank you! Your report has been sent to our team.');
       hideBugModal();
       document.getElementById('bug-desc').value = '';

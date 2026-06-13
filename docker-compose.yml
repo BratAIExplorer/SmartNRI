@@ -14,6 +14,22 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
+    depends_on:
+      - smartnri_api
+
+  smartnri_api:
+    build: ./backend
+    container_name: smartnri_api
+    restart: always
+    networks:
+      - smartnri_isolated
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')\""]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 networks:
   smartnri_isolated:
