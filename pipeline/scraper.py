@@ -139,11 +139,27 @@ def slugify(text: str) -> str:
 
 def scrape_html(source: dict) -> list[dict]:
     """Generic HTML scraper — extracts headings + paragraphs."""
-    resp = safe_get(source["url"])
-    if not resp:
-        return []
-
-    soup = BeautifulSoup(resp.text, "html.parser")
+    if "incometaxindia.gov.in" in source["url"]:
+        try:
+            from playwright.sync_api import sync_playwright
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True)
+                page = browser.new_page()
+                page.goto(source["url"], timeout=60000, wait_until="networkidle")
+                html_content = page.content()
+                browser.close()
+            soup = BeautifulSoup(html_content, "html.parser")
+        except ImportError:
+            log.error("Playwright not installed. Skipping incometaxindia.")
+            return []
+        except Exception as e:
+            log.error(f"Playwright failed for {source['url']}: {e}")
+            return []
+    else:
+        resp = safe_get(source["url"])
+        if not resp:
+            return []
+        soup = BeautifulSoup(resp.text, "html.parser")
     items = []
 
     # Specific: ESD / MOHA Table

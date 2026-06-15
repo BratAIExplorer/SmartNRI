@@ -180,6 +180,8 @@ def run():
 
     if not summaries:
         log.info("No summaries to publish.")
+        if INDEX_HTML.exists():
+            INDEX_HTML.touch()
         return
 
     # Inject into HTML

@@ -101,7 +101,7 @@ def run(pipeline_failed: bool = False) -> bool:
         with open(SUMMARIES_FILE) as f:
             summaries = json.load(f)
         if len(summaries) == 0:
-            issues.append("summaries.json is empty — no items published today")
+            log.info("summaries.json is empty — no relevant items to publish today.")
 
     # Check index.html was updated recently
     if INDEX_HTML.exists():

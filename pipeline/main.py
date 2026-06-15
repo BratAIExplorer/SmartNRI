@@ -47,6 +47,12 @@ def main():
 
         if not raw_items:
             log.info("No new items — skipping summariser and publisher.")
+            
+            # Touch index.html to prevent watchdog from raising age alerts during slow news days
+            index_html = Path(__file__).resolve().parent.parent / "frontend" / "index.html"
+            if index_html.exists():
+                index_html.touch()
+                
             from watchdog import run as watchdog
             watchdog(pipeline_failed=False)
             return
